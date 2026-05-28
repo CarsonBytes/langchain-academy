@@ -1,3 +1,4 @@
+import os
 from langchain_openai import ChatOpenAI
 from langgraph.graph import MessagesState
 from langgraph.graph import StateGraph, START, END
@@ -14,7 +15,11 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 # LLM with bound tool
-llm = ChatOpenAI(model="gpt-4o")
+llm = ChatOpenAI(
+    model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 llm_with_tools = llm.bind_tools([multiply])
 
 # Node
