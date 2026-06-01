@@ -5,7 +5,13 @@ from langgraph.graph import StateGraph, START, END
 
 # We will use this model for both the conversation and the summarization
 from langchain_openai import ChatOpenAI
-model = ChatOpenAI(model="gpt-4o", temperature=0) 
+import os
+model = ChatOpenAI(
+    model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    api_key=os.getenv("OPENAI_API_KEY"),
+    temperature=0
+)
 
 # State class to store messages and summary
 class State(MessagesState):

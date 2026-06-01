@@ -1,4 +1,4 @@
-import operator
+ import operator
 from pydantic import BaseModel, Field
 from typing import Annotated, List
 from typing_extensions import TypedDict
@@ -13,7 +13,12 @@ from langgraph.graph import END, MessagesState, START, StateGraph
 
 ### LLM
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0) 
+llm = ChatOpenAI(
+    model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    api_key=os.getenv("OPENAI_API_KEY"),
+    temperature=0
+)
 
 ### Schema 
 

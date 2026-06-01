@@ -13,7 +13,12 @@ from langgraph.store.base import BaseStore
 import configuration
 
 # Initialize the LLM
-model = ChatOpenAI(model="gpt-4o", temperature=0) 
+model = ChatOpenAI(
+    model=os.getenv("OPENAI_MODEL", "gpt-4o"),
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    api_key=os.getenv("OPENAI_API_KEY"),
+    temperature=0
+)
 
 # Memory schema
 class Memory(BaseModel):
